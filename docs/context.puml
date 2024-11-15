@@ -1,0 +1,51 @@
+@startuml eCommerce Context
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(usuario_registrado, Usuario Registrado)
+Person(usuario_nuevo, Usuario Nuevo)
+
+System_Ext(oauth, "oAuth API", "Authenticación de usuarios")
+System_Ext(maps_api, "Maps API", "Plataforma de Mapas, utilizado para operaciones logísticas.")
+System_Ext(email_service, "E-Mail service")
+System_Ext(emailQueue_service, "E-Mail service, a través de Queue")
+System_Ext(push_service, "Push Notifications", "Servicio para envío de notificaciones a los usuarios.")
+SystemQueue_Ext(queue_system, "Queue", "Para el envío de eventos a los diferentes sistemas de notificaciones.")
+
+Enterprise_Boundary(eCommerce, "eCommerce"){
+    Container(modulo_usuarios, "Usuarios")
+    Container(modulo_pedidos, "Pedidos")
+    Container(modulo_cuentas, "Cuentas")
+    Container(modulo_logistica, "Logística")
+    Container(modulo_inventarios, "Inventarios")
+    Container(modulo_facturas, "Facturas")
+    
+    SystemDb(db_usuarios, "usuarios")
+    SystemDb(db_pedidos, "pedidos")
+    SystemDb(db_cuentas, "cuentas")
+    SystemDb(db_logistica, "logistica")
+    SystemDb(db_facturas, "facturas")
+    SystemDb(db_w_inventarios, "inventarios WRITE")
+    SystemDb(db_r_inventarios, "inventarios READ")
+}
+
+BiRel(modulo_logistica, db_logistica, "Lee y escribe")
+BiRel(modulo_pedidos, db_pedidos, "Lee y escribe")
+BiRel(modulo_usuarios, db_usuarios, "Lee y escribe")
+BiRel(modulo_cuentas, db_cuentas, "Lee y escribe")
+BiRel(modulo_facturas, db_facturas, "Lee y escribe")
+Rel_Down(modulo_inventarios, db_w_inventarios, "Escribe")
+Rel_Up(db_r_inventarios, modulo_inventarios, "Lee")
+Rel_Down(modulo_pedidos, db_w_inventarios, "Escribe")
+Rel_Up(db_r_inventarios, modulo_pedidos, "Lee")
+
+BiRel(eCommerce, maps_api, "Usa")
+BiRel(eCommerce, email_service, "Usa")
+BiRel(eCommerce, queue_system, "Usa")
+
+Rel_Down(usuario_registrado, eCommerce, "Usa")
+Rel_Down(usuario_nuevo, eCommerce, "Usa")
+
+Rel_Down(queue_system, emailQueue_service, "Usa")
+Rel_Down(queue_system, push_service, "Usa")
+
+@enduml
