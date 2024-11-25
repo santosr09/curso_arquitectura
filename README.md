@@ -1,5 +1,7 @@
 # curso_arquitectura
 Curso de Arquitectura - C7 - Domix
+***
+https://www.youtube.com/playlist?list=PLpFibI0Y0nRezerbGPWGi14BrG1v8qJD3
 
 Práctica- Clase 19
 # Checklist
