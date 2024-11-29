@@ -1,5 +1,6 @@
 # curso_arquitectura
 Curso de Arquitectura - C7 - Domix
+Repo C7: https://github.com/CirculoSiete/curso-arquitectura-moderna-servicios-2024/blob/main/docs/arc42_documento_ecommerce.md
 ***
 https://www.youtube.com/playlist?list=PLpFibI0Y0nRezerbGPWGi14BrG1v8qJD3
 
